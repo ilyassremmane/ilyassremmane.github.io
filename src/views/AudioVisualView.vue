@@ -10,7 +10,7 @@ const lancerVideo = (idVideo) => {
 
 // -- AFFICHE (LIGHTBOX) --
 const afficheOuverte = ref(false)
-const urlAffiche = "https://picsum.photos/id/1070/600/800" // Défini ici pour l'utiliser à 2 endroits
+const urlAffiche = "/photos/audiovisuel/affiche_la_prepa.jpg" // Défini ici pour l'utiliser à 2 endroits
 
 const ouvrirAffiche = () => {
   afficheOuverte.value = true
@@ -41,8 +41,8 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
       <article class="docu-phare">
         
         <header class="docu-header">
-          <h3>Le titre de mon grand documentaire</h3>
-          <span class="annee">2026 — 45 min — Réalisation : Mon Nom</span>
+          <h3>La prépa de plus près</h3>
+          <span class="annee">2025 — 18 min — filmé : 2024</span>
         </header>
 
         <div class="docu-content">
@@ -60,14 +60,14 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
 
           <div class="info-col">
             <p class="description">
-              Ce documentaire retrace le parcours fascinant de... C'est ici que tu mets le synopsis 
-              de ton film, les sélections en festival, ou tes intentions de réalisateur. 
-              Le texte démarre maintenant à la même hauteur que l'affiche !
+              "La prépa de plus près" est un documentaire captivant qui plonge au cœur du quotidien des étudiants en classes préparatoires. 
+              Réalisé par un étudiant de prépa lui-même, ce projet authentique et immersif a été filmé sur une année complète pour offrir 
+              une vision aussi réaliste que possible de cette expérience exigeante.
             </p>
 
             <div class="video-wrapper mt-2">
-              <div v-if="videoEnLecture !== 'documentaire1'" class="miniature-custom" @click="lancerVideo('documentaire1')">
-                <img src="https://picsum.photos/id/1018/1200/600" alt="Extrait" />
+              <div  v-if="videoEnLecture !== 'documentaire1'" class="miniature-custom" @click="lancerVideo('documentaire1')">
+                <img src="/photos/audiovisuel/couverture_la_prepa.jpg" alt="Bande-annoce"/>
                 <button class="play-btn">
                   <svg viewBox="0 0 24 24" width="60" height="60" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </button>
@@ -75,7 +75,7 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
               
               <iframe 
                 v-else
-                src="https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1" 
+                src="https://www.youtube.com/embed/5gO8gFpdX8w?si=DRCX-kdUexXvI4oO&autoplay=1" 
                 title="Bande annonce" 
                 frameborder="0" 
                 allow="autoplay; fullscreen; picture-in-picture" 
@@ -90,13 +90,13 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
 
       <article class="video-item">
         <header class="video-info-top">
-          <h3>Interview croisée</h3>
-          <span class="annee">2025 — 5 min</span>
+          <h3>Noise of War</h3>
+          <span class="annee">2025 — 4 min - vidéo collage</span>
         </header>
 
         <div class="video-wrapper">
           <div v-if="videoEnLecture !== 'interview1'" class="miniature-custom" @click="lancerVideo('interview1')">
-            <img src="https://picsum.photos/id/1050/1200/600" alt="Miniature personnalisée" />
+            <img src="/photos/audiovisuel/couverture.jpg" alt="Miniature personnalisée" />
             <button class="play-btn">
               <svg viewBox="0 0 24 24" width="60" height="60" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             </button>
@@ -104,7 +104,7 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
           
           <iframe 
             v-else
-            src="https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1" 
+            src="https://www.youtube.com/embed/lOj8tc2txKg?si=7sZG1NbmbdGIfThF?autoplay=1" 
             title="Interview" 
             frameborder="0" 
             allow="autoplay; fullscreen; picture-in-picture" 

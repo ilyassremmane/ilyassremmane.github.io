@@ -3,29 +3,36 @@
     
     <div class="contact-content">
       <div class="portrait-photographe">
-        <img src="https://picsum.photos/id/1011/800/1000" alt="Portrait du photographe" @contextmenu.prevent draggable="false" />
+        <img src="/photos/ilyass_nb.jpg" alt="Portrait du photographe" @contextmenu.prevent draggable="false" />
       </div>
 
       <div class="infos-colonne">
         <h2>À propos</h2>
         <p class="bio">
-          Je suis un(e) photographe basé(e) en France, spécialisé(e) dans la photographie documentaire et le portrait. 
-          Mon travail explore les liens entre les individus et leur environnement, avec une attention particulière 
-          portée aux histoires oubliées et aux détails du quotidien.
-        </p>
-        <p class="bio">
-          Diplômé(e) de [Nom de ton école/formation], je collabore régulièrement avec des associations 
-          pour mettre en lumière leurs initiatives à travers l'image et l'audiovisuel.
-        </p>
+          Je suis un jeune artiste né et grandi au Maroc, plus précisément à Oujda. 
+          Installé en France depuis 2019 avec ma famille, j’y ai poursuivi mes études 
+          tout en développant pleinement mes pratiques et mes passions artistiques.
+          </p>
+
+          <p class="bio">
+          À travers mon travail, je m’intéresse aux réalités cachées, aux détails 
+          souvent ignorés ou méconnus du quotidien. Mon approche artistique cherche 
+          à documenter et révéler ces fragments invisibles du réel.
+          </p>
+
+          <p class="bio">
+          Je suis actuellement étudiant en formation IMAC (Image, Multimédia, 
+          Audiovisuel et Communication) à l’ESIEE Paris.
+          </p>
 
         <div class="contact-details">
-          <h3>Me contacter</h3>
-          <a href="mailto:contact@monnom.com" class="email-link">contact@monnom.com</a>
+          <h3>Contact</h3>
+          <a href="mailto:contact@monnom.com" class="email-link">ilyass.remmane@edu.esiee.fr</a>
         </div>
 
         <div class="social-links">
           <h3>Réseaux</h3>
-          <a href="https://instagram.com/ton_compte" target="_blank" rel="noopener noreferrer" class="social-btn">
+          <a href="https://www.instagram.com/arts_bidaei/" target="_blank" rel="noopener noreferrer" class="social-btn">
             <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -34,13 +41,11 @@
             Instagram
           </a>
           
-          <a href="https://linkedin.com/in/ton_compte" target="_blank" rel="noopener noreferrer" class="social-btn">
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-              <rect x="2" y="9" width="4" height="12"></rect>
-              <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-            LinkedIn
+          <a href="https://www.youtube.com/@ilyassremmane2509" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+    <path d="M23.5 6.2a2.9 2.9 0 0 0-2-2C19.8 3.8 12 3.8 12 3.8s-7.8 0-9.5.4a2.9 2.9 0 0 0-2 2A30.5 30.5 0 0 0 0 12a30.5 30.5 0 0 0 .5 5.8 2.9 2.9 0 0 0 2 2c1.7.4 9.5.4 9.5.4s7.8 0 9.5-.4a2.9 2.9 0 0 0 2-2A30.5 30.5 0 0 0 24 12a30.5 30.5 0 0 0-.5-5.8zM9.7 15.5v-7l6.3 3.5-6.3 3.5z"/>
+  </svg>
+            YouTube
           </a>
         </div>
       </div>
