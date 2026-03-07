@@ -10,7 +10,7 @@
       <p class="caption">"Rencontre" — 2026</p>
     </RouterLink>
 
-    <RouterLink to="/mes-photos" class="photo-item">
+    <RouterLink to="/MaSelection" class="photo-item">
       <img src="/photos/plus/playa.jpg" alt="Couverture Mes Photos" @contextmenu.prevent draggable="false" />
       <p class="caption">Sélection Libre — Photographies diverses</p>
     </RouterLink>

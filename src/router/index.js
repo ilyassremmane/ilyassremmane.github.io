@@ -12,6 +12,7 @@ const router = createRouter({
     { path: '/Rencontre', name: 'rencontre', component: () => import('../views/RencontreView.vue') },
     // Le ":id" veut dire que ce morceau d'URL peut changer (ex: /expo-2/marie-dupont)
     { path: '/Rencontre/:id', name: 'rencontre-detail', component: () => import('../views/RencontreDetailView.vue') },
+    { path: '/MaSelection', name: 'selection', component: () => import('../views/MaSelectionView.vue') },
     { path: '/audiovisuel', name: 'audiovisuel', component: () => import('../views/AudioVisualView.vue') },
     { path: '/contact', name: 'contact', component: () => import('../views/ContactView.vue') },
     { path: '/portfolio', name: 'portfolio', component: () => import('../views/PortfolioView.vue') },
