@@ -19,7 +19,11 @@ const closeMenu = () => {
   <div class="site-container">
     <header class="navigation">
       <h1>
-      <RouterLink to="/" class="logo-link">ILYASS REMMANE</RouterLink>
+        <RouterLink to="/" class="logo-link">
+          <span class="titre-fr">ILYASS REMMANE</span>
+          <img src="/SVG/logo.svg" alt="Logo" class="logo-header" />
+          <img src="/SVG/ism.svg" alt="Ilyass Remmane en arabe" class="titre-ar-header" />
+        </RouterLink>
       </h1>
       
       <button class="hamburger" @click="toggleMenu" aria-label="Menu">
@@ -59,6 +63,41 @@ html, body, #app {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+/* On transforme le lien en conteneur flexible */
+.logo-link {
+  display: flex;
+  align-items: center; /* Centre les éléments sur la même ligne horizontale */
+  gap: 15px; /* L'espace entre le français, le logo et l'arabe */
+  text-decoration: none; /* Enlève le soulignement du lien */
+  color: inherit; /* Garde la couleur de base de ton <h1> */
+}
+
+/* La taille du logo au centre */
+.logo-header {
+  height: 40px; /* Valeur à augmenter/diminuer selon tes préférences */
+  width: auto;
+}
+
+/* La taille du texte en arabe */
+.titre-ar-header {
+  height: 35px; /* Valeur à ajuster pour s'équilibrer avec le texte français */
+  width: auto;
+}
+
+/* Optionnel : si le logo est trop serré sur les petits écrans */
+@media (max-width: 768px) {
+  .logo-link {
+    gap: 10px; /* On réduit un peu l'espace sur mobile */
+  }
+  
+  .logo-header {
+    height: 30px; /* On réduit un peu le logo sur mobile */
+  }
+
+  .titre-ar-header {
+    height: 25px; /* On réduit un peu l'arabe sur mobile */
+  }
 }
 /* --- Style global minimaliste --- */
 body {

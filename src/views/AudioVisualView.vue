@@ -10,13 +10,23 @@ const lancerVideo = (idVideo) => {
 
 // -- AFFICHE (LIGHTBOX) --
 const afficheOuverte = ref(false)
-const urlAffiche = "/photos/audiovisuel/affiche_la_prepa.jpg" // Défini ici pour l'utiliser à 2 endroits
+const urlAffiche = ref("/photos/audiovisuel/affiche_la_prepa.jpg") // Défini ici pour l'utiliser à 2 endroits
+const obseleteVideoSrc = "/photos/audiovisuel/titre_obselete.mov"
+const obseleteVideo = ref(null)
+const obseleteMuted = ref(true)
 
-const ouvrirAffiche = () => {
+const ouvrirAffiche = (src) => {
+  urlAffiche.value = src
   afficheOuverte.value = true
 }
 const fermerAffiche = () => {
   afficheOuverte.value = false
+}
+
+const toggleObseleteSon = () => {
+  if (!obseleteVideo.value) return
+  obseleteMuted.value = !obseleteMuted.value
+  obseleteVideo.value.muted = obseleteMuted.value
 }
 
 // Fermer avec la touche Échap
@@ -51,7 +61,7 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
               :src="urlAffiche" 
               alt="Affiche du film" 
               class="affiche-cliquable"
-              @click="ouvrirAffiche"
+              @click="ouvrirAffiche('/photos/audiovisuel/affiche_la_prepa.jpg')"
               @contextmenu.prevent 
               draggable="false" 
             />
@@ -86,7 +96,83 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
         </div>
       </article>
 
-      <hr class="separateur" />
+      <article class="video-item">
+        <header class="video-info-top">
+          <h3>Hermite</h3>
+          <span class="annee">2026 — 2 min — bande annonce fictive</span>
+        </header>
+
+        <div class="video-wrapper">
+          <div v-if="videoEnLecture !== 'hermite1'" class="miniature-custom" @click="lancerVideo('hermite1')">
+            <img src="/photos/audiovisuel/Hermite.jpg" alt="Miniature Hermite" />
+            <button class="play-btn">
+              <svg viewBox="0 0 24 24" width="60" height="60" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </button>
+          </div>
+
+          <iframe 
+            v-else
+            src="https://www.youtube.com/embed/yEHCAbFVzdk?si=2PLJAnsq-VJCq4wt&autoplay=1" 
+            title="Hermite bande annonce" 
+            frameborder="0" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </article>
+
+      <article class="docu-phare">
+        <header class="docu-header">
+          <h3>Obselète</h3>
+          <span class="annee">2025 — 6 min — court métrage</span>
+        </header>
+
+        <div class="obselete-video-block spaced-video">
+          <video ref="obseleteVideo" autoplay muted playsinline loop class="obselete-video">
+            <source :src="obseleteVideoSrc" type="video/quicktime" />
+            Votre navigateur ne prend pas en charge cette vidéo.
+          </video>
+          <button class="son-btn" @click="toggleObseleteSon">
+            {{ obseleteMuted ? 'Activer le son' : 'Couper le son' }}
+          </button>
+        </div>
+
+        <div class="docu-content">
+          <div class="affiche-col">
+            <img 
+              src="/photos/audiovisuel/affiche_obselete.jpg" 
+              alt="Affiche Obselète" 
+              class="affiche-cliquable affiche-simple" 
+              @click="ouvrirAffiche('/photos/audiovisuel/affiche_obselete.jpg')"
+              @contextmenu.prevent 
+              draggable="false" 
+            />
+            <p class="indication-clic">Cliquez pour agrandir</p>
+          </div>
+
+          <div class="info-col">
+            <p class="description">
+              Obselète est un court métrage qui interroge la mémoire et la perte à travers une narration visuelle contemporaine.
+            </p>
+            <div class="video-wrapper youtube-obselete">
+              <div v-if="videoEnLecture !== 'obselete2'" class="miniature-custom" @click="lancerVideo('obselete2')">
+                <img src="/photos/audiovisuel/couverture_obselete.jpg" alt="Couverture Obselète" />
+                <button class="play-btn">
+                  <svg viewBox="0 0 24 24" width="60" height="60" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </button>
+              </div>
+              <iframe 
+                v-else
+                src="https://www.youtube.com/embed/f4wEasiIWoY?si=xcPJp7OQ7VN0UdwV&autoplay=1" 
+                title="Obselète court métrage" 
+                frameborder="0" 
+                allow="autoplay; fullscreen; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </article>
 
       <article class="video-item">
         <header class="video-info-top">
@@ -104,7 +190,7 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
           
           <iframe 
             v-else
-            src="https://www.youtube.com/embed/lOj8tc2txKg?si=7sZG1NbmbdGIfThF?autoplay=1" 
+            src="https://www.youtube.com/embed/lOj8tc2txKg?si=7sZG1NbmbdGIfThF&autoplay=1" 
             title="Interview" 
             frameborder="0" 
             allow="autoplay; fullscreen; picture-in-picture" 
@@ -137,6 +223,44 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
   margin: 0 auto;
 }
 
+.obselete-video-block {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.obselete-video-block.spaced-video {
+  margin-bottom: 2rem;
+}
+.obselete-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.son-btn {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 10;
+  padding: 0.8rem 1rem;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.son-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+.affiche-simple {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
 /* --- LE DOCUMENTAIRE PHARE --- */
 .docu-phare {
   display: flex;
@@ -160,6 +284,7 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
     align-items: stretch; /* Force les deux colonnes à faire la même hauteur */
   }
   .affiche-col { flex: 1; }
+  .video-col { flex: 2; }
   .info-col { 
     flex: 2; 
     display: flex; 
@@ -190,6 +315,7 @@ onUnmounted(() => window.removeEventListener('keydown', gererClavier))
 /* Wrapper 16:9 pour YouTube/Vimeo */
 .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background-color: #111; overflow: hidden; }
 .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.youtube-obselete { margin-top: 1.5rem; }
 
 /* --- LE SYSTÈME DE MINIATURE PERSONNALISÉE --- */
 .miniature-custom {

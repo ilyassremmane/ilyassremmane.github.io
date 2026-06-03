@@ -48,7 +48,7 @@ export const listeRencontres = [
     id: 'renc_2.1',
     nom: 'Zénith',
     photoCouverture: '/photos/rencontre/renc_5.0.jpg',
-    texte: "Allongé dans le peu d'ombre qu'il y avait à cette heure ci...",
+    texte: "Allongés dans le peu d'ombre qu'il y avait à cette heure-ci, cherchant à se reposer avant de reprendre leur long trajet à la recherche de \"déchets\" (des bidons, des bouteilles, du pain dur).\n Mais malgré cela, un grand sourire illumine leurs visages ; ils prennent le temps de discuter et de répondre aux questions.\n",
     autresPhotos: [
       '/photos/rencontre/renc_5.1.jpg',
       '/photos/rencontre/renc_5.2.jpg',
