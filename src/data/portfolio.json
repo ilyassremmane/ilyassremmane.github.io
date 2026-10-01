@@ -1,0 +1,144 @@
+[
+  {
+    "id": "musique",
+    "titre": "Musique",
+    "slides": [
+      {
+        "images": [
+          "/photos/portfolio/zik/ilyass_petit_guembri.jpg",
+          "/photos/portfolio/zik/ilyass_ado_guembri.jpg"
+        ],
+        "texte": "Depuis tout petit, j'ai appris à écouter la musique que mon père jouait. Le fait d'être myope m'a même aidé à me concentrer encore plus sur l'ouïe et sur cette pratique. \n\nPetite note : j'apprends mes passions en autodidacte, car je ne supporte pas le côté académique pour m'amuser."
+      },
+      {
+        "images": [
+          "/photos/portfolio/zik/ilyass_batterie.jpg",
+          "/photos/portfolio/zik/ilyass_compo_solo.jpg"
+        ],
+        "texte": "Avant de rejoindre un groupe, je jouais pour moi, je composais beaucoup. J'aimais tester différents instruments pour comprendre comment ils fonctionnaient, même sans les maîtriser parfaitement."
+      },
+      {
+        "images": [
+          "/photos/portfolio/zik/affiche_soiree_awang.jpg",
+          "/photos/portfolio/zik/soiree_awang.jpg",
+          "/photos/portfolio/zik/soiree_marocaine.jpg"
+        ],
+        "texte": "Awang : mon premier groupe ! Un trio de Gnawa au départ, qui a ensuite évolué vers de la fusion entre musique Gnawa et chant malien."
+      },
+      {
+        "images": [
+          "/photos/portfolio/zik/couverture_i_love_u.jpg",
+          "/photos/portfolio/zik/grp_Remmane_fete_musique_25.jpg"
+        ],
+        "texte": "Père & Fils (REMMANE). Très vite, j'ai commencé à jouer plus souvent avec mon père. On a repris les morceaux de sa jeunesse et il s'est remis à composer. Aujourd'hui, on joue tout le temps ensemble : Fête de la musique, fêtes de quartier, ou lors de mes vernissages."
+      },
+      {
+        "images": [
+          "/photos/portfolio/zik/Hugo.jpg",
+          "/photos/portfolio/zik/Paul.jpg"
+        ],
+        "texte": "Avec l'ambition de jouer au Gala, j'ai fondé un groupe étudiant avec Hugo à la batterie, Paul au saxo, et moi à la guitare/basse. On fait des jams orientées jazz. Je continue d'apprendre et de rester ouvert aux opportunités !"
+      }
+    ]
+  },
+  {
+    "id": "photographie",
+    "titre": "Photographie",
+    "slides": [
+      {
+        "images": [
+           "/photos/portfolio/pht/lampe.jpg",
+            "/photos/portfolio/pht/route_miroir.jpg"
+        ],
+        "texte": "J'ai toujours été intrigué par ces petites boîtes qui flashent et figent le temps. J'ai commencé par des photos de famille, puis j'ai expérimenté avec mon téléphone : jeux de lumière, filtres, ombres..."
+      },
+      {
+        "images": [
+          "/photos/portfolio/pht/portrait_florian.jpg",
+          "/photos/portfolio/pht/amin_flame.jpg",
+          "/photos/portfolio/pht/nature.jpg",
+          "/photos/portfolio/pht/abeille.jpg"
+        ],
+        "texte": "L'intérêt grandissant, j'ai investi dans des boîtiers, fait des stages et beaucoup testé : studio, pose longue, portrait, nature, macro... \n\nNote : J'ai toujours un appareil sur moi, surtout lors des voyages. Comme sur mon voyage au Maroc en 2022 et qui a donné naissance à une série sur <a href='/expo#/Expo-Nomade' target='_blank' style='text-decoration: underline;'>la Fantasia</a>, exposée pour la première fois en 2025."
+      },
+      {
+        "images": [
+          "/photos/portfolio/pht/asia_day.jpg",
+          "/photos/portfolio/pht/moto_cross.jpg"
+        ],
+        "texte": "Je couvre aussi de nombreux événements : For Ever Young, mariages, Asia Day, soirées étudiantes, postes de secours..."
+      },
+      {
+        "images": [
+          "/photos/portfolio/pht/arthur_argentique.jpg",
+          "/photos/portfolio/pht/essaouira_argentique.jpg",
+          "/photos/portfolio/pht/integration_argentique.jpg"
+        ],
+        "texte": "Récemment, j'ai redécouvert le charme de l'argentique. Prendre les photos, les développer soi-même, et même organiser un événement autour de cette pratique pour l'association 803z. Je partage aussi cette passion avec des enfants via l'association In On Your Way."
+      }
+    ]
+  },
+  {
+    "id": "video",
+    "titre": "Vidéo",
+    "slides": [
+      {
+        "images": [
+          "/photos/portfolio/video/novembre.jpg"
+        ],
+        "texte": "La vidéo est arrivée en parallèle de la photo, grâce aux boîtiers qui font les deux. J'ai commencé par filmer des voyages et des tranches de vie, avant d'être invité sur le tournage d'un court-métrage en 2022."
+      },
+      {
+        "images": [
+          "/photos/portfolio/video/oud.jpg",
+          "/photos/portfolio/video/oud.jpg"
+        ],
+        "texte": "J'ai ensuite couvert des événements (Espace Jeunesse, boxe, natation, plongée) et réalisé des interviews/documentaires, notamment sur un fabricant de Oud et sur ma deuxième année de prépa.  Pour voir d'autre re-éalisation, aller sur la page <a> audiovisuel"
+      },
+      {
+        "images": [
+          "/photos/portfolio/video/affiche_SAH.jpg",
+          "/photos/portfolio/video/affiche_FLOU.jpg",
+          "/photos/portfolio/video/affiche_cestpassorcier.jpg"
+        ],
+        "texte": "J'ai aussi participé à des courts-métrages associatifs ou étudiants, comme 'Sah le clown', où nous avons accompagné des enfants pour leur faire découvrir l'audiovisuel."
+      }
+    ]
+  },
+  {
+    "id": "animation-3d",
+    "titre": "Animation & 3D",
+    "slides": [
+      {
+        "images": [
+          "/photos/portfolio/anim/anim-1.jpg"
+        ],
+        "texte": "L'animation m'a permis de donner vie à mes idées : Stop-motion photo, animation de l'affiche Fantasia sur After Effects, projets sur Blender (Crazy Frog), et création de petits jeux 2D/3D (Scooby-Doo, échecs). J'anime aussi des ateliers stop-motion pour les enfants."
+      }
+    ]
+  },
+  {
+    "id": "web",
+    "titre": "Développement Web",
+    "slides": [
+      {
+        "images": [
+          "/photos/portfolio/web/web-1.jpg"
+        ],
+        "texte": "Mes débuts remontent à mon intégration à l'IMAC en 2024. J'y réalise différents projets Front-end et Back-end, avec pour point culminant le développement du site web de l'artiste Karima."
+      }
+    ]
+  },
+  {
+    "id": "associatif",
+    "titre": "Associatif & Projets Annexes",
+    "slides": [
+      {
+        "images": [
+          "/photos/portfolio/asso/AMSS.jpg"
+        ],
+        "texte": "Je suis très investi dans le milieu associatif : secouriste et communicant pour l'AMSS72, créateur de projets pour la Liste Luma (paon motorisé), trésorier et organisateur d'événements pour 803z, et membre fondateur de In On Your Way (création de logo, idéation, etc.)."
+      }
+    ]
+  }
+]

@@ -37,8 +37,9 @@ const closeMenu = () => {
       <nav :class="{ 'nav-open': isMenuOpen }">
         <RouterLink to="/" @click="closeMenu">Photographie</RouterLink>
         <RouterLink to="/audiovisuel" @click="closeMenu">Audiovisuel</RouterLink>
+        <RouterLink to="/portfolio" @click="closeMenu">Portfolio</RouterLink>
         
-        <a href="https://ilyassremmane.my.canva.site/portfolio" target="_blank" rel="noopener noreferrer" @click="closeMenu">Portfolio</a>
+        <!-- <a href="https://ilyassremmane.my.canva.site/portfolio" target="_blank" rel="noopener noreferrer" @click="closeMenu">Portfolio</a> -->
         <RouterLink to="/contact" @click="closeMenu">Info / Contact</RouterLink>
       </nav>
     </header>

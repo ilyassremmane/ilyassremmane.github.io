@@ -5,18 +5,18 @@
     <section>
       <h3>Éditeur du site</h3>
       <p>Nom : Ilyass Remmane</p>
-      <p>Email : [Ton Email]</p>
+      <p>Email : ilyass.reemmane@edu.esiee.fr</p>
     </section>
 
     <section>
       <h3>Hébergement</h3>
-      <p>Ce site est hébergé par GitHub Pages (ou ton futur hébergeur).</p>
+      <p>Ce site est hébergé par GitHub Pages .</p>
       <p>Adresse de l'hébergeur : GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA.</p>
     </section>
 
     <section>
       <h3>Propriété intellectuelle</h3>
-      <p>L'ensemble des photographies, vidéos et textes présents sur ce site sont la propriété exclusive de [Ton Nom], sauf mention contraire. Toute reproduction est interdite sans autorisation préalable.</p>
+      <p>L'ensemble des photographies, vidéos et textes présents sur ce site sont la propriété exclusive de Ilyass Remmane, sauf mention contraire. Toute reproduction est interdite sans autorisation préalable.</p>
     </section>
   </div>
 </template>
