@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PortfolioGallery from '../components/PortfolioGallery.vue'
+---
+
+<BaseLayout
+  title="Ilyass Remmane - Portfolio"
+  description="Le portfolio d'Ilyass Remmane regroupé par thèmes : musique, photographie, vidéo, animation & 3D, développement web et projets associatifs."
+>
+  <PortfolioGallery client:load />
+</BaseLayout>

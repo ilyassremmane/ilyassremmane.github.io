@@ -1,0 +1,35 @@
+---
+// Page statique d'un portrait : une page par rencontre (5 au total),
+// générée à partir de src/data/rencontres.js — comme l'ancienne route
+// "/Rencontre/:id" de vue-router, mais en HTML statique pour le SEO.
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import RencontreDetail from '../../components/RencontreDetail.vue'
+import { listeRencontres } from '../../data/rencontres.js'
+
+export function getStaticPaths() {
+  return listeRencontres.map((personne, index) => ({
+    params: { id: personne.id },
+    props: {
+      personne,
+      profilPrecedent: index > 0 ? listeRencontres[index - 1] : null,
+      profilSuivant: index < listeRencontres.length - 1 ? listeRencontres[index + 1] : null,
+    },
+  }))
+}
+
+const { personne, profilPrecedent, profilSuivant } = Astro.props
+
+const description = personne.texte.replace(/\s+/g, ' ').slice(0, 160).trim() + '…'
+---
+
+<BaseLayout
+  title={`Ilyass Remmane - Rencontre - ${personne.nom}`}
+  description={description}
+>
+  <RencontreDetail
+    client:load
+    personne={personne}
+    profilPrecedent={profilPrecedent}
+    profilSuivant={profilSuivant}
+  />
+</BaseLayout>

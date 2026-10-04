@@ -1,0 +1,17 @@
+{
+  "name": "photo-pipeline",
+  "version": "1.0.0",
+  "description": "Compression d'images (WebP) + injection de copyright Creative Commons dans les métadonnées",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "optimize": "node optimize.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "exiftool-vendored": "^38.3.0",
+    "sharp": "^0.35.5"
+  }
+}

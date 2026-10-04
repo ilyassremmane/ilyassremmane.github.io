@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+// Page d'accueil : galerie statique de 3 albums (identique à l'ancien HomeView.vue)
+const albums = [
+  {
+    href: '/Expo-Nomade',
+    src: '/photos/expo_nomade/Fantasia_1_top.jpg',
+    alt: 'Couverture Expo Nomade',
+    legende: 'Expo Nomade — 2025',
+  },
+  {
+    href: '/Rencontre',
+    src: '/photos/rencontre/renc_top.jpg',
+    alt: 'Couverture Expo Rencontre',
+    legende: '"Rencontre" — 2026',
+  },
+  {
+    href: '/day-pic',
+    src: '/photos/plus/playa.jpg',
+    alt: 'Couverture Mes Photos',
+    legende: 'day_pic - 2025',
+  },
+  {
+    href: '/manif',
+    src: '/photos/series/manif/manif_1.webp',
+    alt: 'Couverture Manif pour Falestine',
+    legende: 'MF — 2023-2024',
+  },
+  {
+    href: '/archi',
+    src: '/photos/series/archi/sablon.webp',
+    alt: 'Couverture Archi',
+    legende: 'Archi — 2019',
+  },
+]
+---
+
+<BaseLayout
+  title="Ilyass Remmane - Photographie"
+  description="Portfolio de photographie d'Ilyass Remmane : Expo Nomade (Fantasia), portraits et rencontres, série Day Pic, Manif pour Falestine, architecture, et une sélection libre de photographies diverses."
+>
+  <div class="gallery">
+    {albums.map((album) => (
+      <a href={album.href} class="photo-item">
+        <img src={album.src} alt={album.alt} oncontextmenu="return false" draggable="false" />
+        <p class="caption">{album.legende}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 3rem 2rem; /* Plus d'espace en bas (3rem) qu'entre les colonnes (2rem) */
+}
+.photo-item {
+  text-decoration: none; /* Enlève le soulignement du lien */
+  display: block;
+  transition: opacity 0.3s ease;
+}
+.photo-item:hover {
+  opacity: 0.7; /* Petit effet au survol */
+}
+.photo-item img {
+  width: 100%;
+  aspect-ratio: 4/3; /* Force toutes les photos de couverture à avoir le même format ! */
+  object-fit: cover;
+  display: block;
+  user-select: none; 
+}
+.caption {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+</style>

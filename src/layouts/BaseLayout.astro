@@ -1,0 +1,110 @@
+---
+/**
+ * Layout principal du site.
+ * Reproduit à l'identique l'ancien src/App.vue (header bilingue + menu
+ * hamburger + footer), mais sous forme de HTML statique généré par Astro.
+ */
+import '../styles/global.css'
+
+interface Props {
+  /** <title> de la page (ex: "Ilyass Remmane - Portfolio") */
+  title: string
+  /** <meta name="description"> de la page (SEO) */
+  description: string
+}
+
+const { title, description } = Astro.props
+
+// Chemin de la page courante, pour marquer le lien actif du menu
+const chemin = Astro.url.pathname.replace(/\/$/, '') || '/'
+
+// Un lien est "actif" s'il pointe vers la page courante (ou un sous-dossier)
+const estActif = (href: string) => {
+  if (href === '/') return chemin === '/'
+  return chemin === href || chemin.startsWith(href + '/')
+}
+
+const urlCanonical = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={urlCanonical} />
+
+    <!-- Open Graph (réseaux sociaux) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={urlCanonical} />
+    <meta property="og:site_name" content="Ilyass Remmane" />
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="site-container">
+        <header class="navigation">
+          <h1>
+            <a href="/" class="logo-link">
+              <span class="titre-fr">ILYASS REMMANE</span>
+              <img src="/SVG/logo.svg" alt="Logo" class="logo-header" />
+              <img src="/SVG/ism.svg" alt="Ilyass Remmane en arabe" class="titre-ar-header" />
+            </a>
+          </h1>
+
+          <button class="hamburger" aria-label="Menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <nav>
+            <a href="/" aria-current={estActif('/') ? 'page' : undefined}>Photographie</a>
+            <a href="/audiovisuel" aria-current={estActif('/audiovisuel') ? 'page' : undefined}>Audiovisuel</a>
+            <a href="/portfolio" aria-current={estActif('/portfolio') ? 'page' : undefined}>Portfolio</a>
+            <a href="/contact" aria-current={estActif('/contact') ? 'page' : undefined}>Info / Contact</a>
+          </nav>
+        </header>
+
+        <main class="content-area">
+          <slot />
+        </main>
+
+        <footer class="site-footer">
+          <p class="copyright">&copy; 2026 ILYASS REMMANE. Tous droits réservés.</p>
+          <div class="footer-links">
+            <a href="/contact">Contact</a>
+            <a href="/mentions-legales">Mentions Légales</a>
+            <button class="cookie-btn">Gestion des cookies</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      // Menu hamburger : identique à l'ancien comportement de App.vue
+      // (ouverture/fermeture du menu mobile + fermeture au clic sur un lien)
+      const bouton = document.querySelector<HTMLButtonElement>('.hamburger')
+      const menu = document.querySelector<HTMLElement>('.navigation nav')
+
+      bouton?.addEventListener('click', () => {
+        const ouvert = menu?.classList.toggle('nav-open') ?? false
+        bouton.setAttribute('aria-expanded', String(ouvert))
+      })
+
+      menu?.querySelectorAll('a').forEach((lien) => {
+        lien.addEventListener('click', () => {
+          menu.classList.remove('nav-open')
+          bouton?.setAttribute('aria-expanded', 'false')
+        })
+      })
+    </script>
+  </body>
+</html>

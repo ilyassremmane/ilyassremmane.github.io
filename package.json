@@ -3,20 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/vue": "^7.0.3",
+    "astro": "^7.3.5",
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
     "vue": "^3.5.29",
-    "vue-router": "^5.0.3"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.4",
-    "vite": "^7.3.1",
-    "vite-plugin-vue-devtools": "^8.0.6"
+    "world-atlas": "^2.0.2"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

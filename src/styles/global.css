@@ -1,0 +1,196 @@
+/* ============================================================
+   CSS GLOBAL DU SITE
+   Copié à l'identique de l'ancien src/App.vue (bloc <style>)
+   pour garantir un rendu 100 % identique après la migration.
+   ============================================================ */
+
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+/* On transforme le lien en conteneur flexible */
+.logo-link {
+  display: flex;
+  align-items: center; /* Centre les éléments sur la même ligne horizontale */
+  gap: 15px; /* L'espace entre le français, le logo et l'arabe */
+  text-decoration: none; /* Enlève le soulignement du lien */
+  color: inherit; /* Garde la couleur de base de ton <h1> */
+}
+
+/* La taille du logo au centre */
+.logo-header {
+  height: 40px; /* Valeur à augmenter/diminuer selon tes préférences */
+  width: auto;
+}
+
+/* La taille du texte en arabe */
+.titre-ar-header {
+  height: 35px; /* Valeur à ajuster pour s'équilibrer avec le texte français */
+  width: auto;
+}
+
+/* Optionnel : si le logo est trop serré sur les petits écrans */
+@media (max-width: 768px) {
+  .logo-link {
+    gap: 10px; /* On réduit un peu l'espace sur mobile */
+  }
+  
+  .logo-header {
+    height: 30px; /* On réduit un peu le logo sur mobile */
+  }
+
+  .titre-ar-header {
+    height: 25px; /* On réduit un peu l'arabe sur mobile */
+  }
+}
+/* --- Style global minimaliste --- */
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+.site-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  
+  /* --- LA MAGIE DU FOOTER EN BAS COMMENCE ICI --- */
+  min-height: 100vh; /* Le conteneur fait au minimum 100% de la hauteur de l'écran */
+  box-sizing: border-box; /* Empêche le "padding" de rajouter du scroll en trop */
+  display: flex;
+  flex-direction: column; /* Organise le site en colonne (Header, Main, Footer) */
+}
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+  position: relative; /* Important pour placer le menu mobile en dessous */
+}
+.navigation h1 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* Le bouton hamburger est caché sur ordinateur */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1a1a1a;
+  padding: 0;
+}
+
+/* Style des liens sur ordinateur */
+nav {
+  display: flex;
+}
+nav a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #666;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+/* L'ancien site utilisait la classe .router-link-active de vue-router pour
+   mettre en gras le lien de la page courante. On reproduit exactement le même
+   effet avec l'attribut aria-current="page" posé par le layout Astro. */
+nav a:hover, nav a[aria-current="page"] {
+  color: #000;
+}
+.logo-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- Adaptation Mobile (écrans de 768px et moins) --- */
+@media (max-width: 768px) {
+  /* On affiche l'icône hamburger */
+  .hamburger {
+    display: block; 
+  }
+  
+  /* On cache le menu par défaut et on le prépare à s'afficher en colonne */
+  nav {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* S'affiche juste en dessous du header */
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 1rem 0;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); /* Petite ombre légère */
+    z-index: 50;
+  }
+
+  /* Cette classe est ajoutée par le petit script du layout quand on clique sur le bouton */
+  nav.nav-open {
+    display: flex; 
+  }
+
+  /* On centre les liens et on les espace un peu plus pour les gros doigts */
+  nav a {
+    margin: 0.8rem 0;
+    margin-left: 0;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+}
+
+/* --- Style du Footer --- */
+.content-area {
+  flex: 1 0 auto; /* Le "1" dit de grandir au max, le "0 auto" empêche les bugs */
+  width: 100%;
+}
+
+.site-footer {
+  margin-top: 6rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee; /* Petite ligne séparatrice très discrète */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a, .cookie-btn {
+  color: #888;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover, .cookie-btn:hover {
+  color: #000;
+}
+
+/* Footer sur mobile */
+@media (max-width: 768px) {
+  .site-footer {
+    flex-direction: column-reverse; /* Met le copyright tout en bas */
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

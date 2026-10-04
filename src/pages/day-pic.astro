@@ -1,0 +1,272 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import SerieSelection from '../components/serie/SerieSelection.vue'
+import SerieLightbox from '../components/serie/SerieLightbox.vue'
+import serie from '../data/series/day-pic.json'
+import fs from 'node:fs'
+
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+const dateFR = (iso: string) => {
+  const [a, m, j] = iso.split('-')
+  return `${Number(j)} ${MOIS[Number(m) - 1]} ${a}`
+}
+
+// Chemins des WebP générés par photo-pipeline (dossier public/photos/series/day-pic)
+const photos = serie.photos.map((p) => ({ ...p, src: `/photos/series/day-pic/${p.id}.webp` }))
+
+// Contrôle au build : chaque photo doit réellement exister
+const manquantes = photos.filter((p) => !fs.existsSync(`public${p.src}`))
+if (manquantes.length > 0) {
+  console.warn(
+    `[day-pic] ${manquantes.length} fichier(s) manquant(s) dans public/ :`,
+    manquantes.map((p) => p.src).join(', '),
+  )
+}
+---
+
+<BaseLayout title="Ilyass Remmane - Day Pic" description={serie.description}>
+  <article class="serie-page">
+    <header class="serie-entete">
+      <h1 class="titre-page">{serie.titre}</h1>
+      {serie.intro.map((paragraphe) => <p class="intro-texte">{paragraphe}</p>)}
+    </header>
+
+    <section class="serie-selection" aria-label="Filtrer par date ou par lieu">
+      <SerieSelection client:visible photos={photos} lieux={serie.lieux} />
+    </section>
+
+    <section
+      class="serie-galerie"
+      id="galerie-serie"
+      aria-label="Galerie de la série"
+      data-par-page={serie.parPage}
+      data-nombre-initial={serie.selectionInitiale.nombre}
+    >
+      <div class="galerie-barre">
+        <h2 class="galerie-etat" id="galerie-etat" aria-live="polite">
+          {serie.selectionInitiale.nombre} photos au hasard sur {photos.length}
+        </h2>
+        <div class="galerie-actions">
+          <button type="button" class="galerie-bouton" id="btn-reset" hidden>Réinitialiser</button>
+          <button type="button" class="galerie-bouton" id="btn-plus" hidden>Voir plus</button>
+        </div>
+      </div>
+
+      <div class="grille-daypic" id="grille-daypic">
+        {photos.map((p) => (
+          <figure
+            class="photo-daypic"
+            data-id={p.id}
+            data-date={p.date}
+            data-lieu={p.lieu ?? ''}
+            data-lieu-nom={p.lieu ? serie.lieux[p.lieu]?.nom ?? '' : ''}
+          >
+            <img
+              src={p.src}
+              alt={`Photo ${p.id} — ${dateFR(p.date)}`}
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+              oncontextmenu="return false"
+            />
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <SerieLightbox client:load photos={photos} lieux={serie.lieux} />
+  </article>
+</BaseLayout>
+
+<script>
+// Logique de la galerie : sélection aléatoire initiale, filtres (calendrier /
+// globe), pagination « Voir plus » et ouverture de la lightbox.
+// Le HTML des 96 photos est statique (SEO) ; ce script ne fait que masquer /
+// afficher les <figure> et synchroniser le store partagé avec les îlots.
+import { lecture, abonner, resetFiltre, ouvrirPhoto, majAffichees } from '../components/serie/serieEtat.js'
+
+const grille = document.getElementById('grille-daypic')
+const section = document.getElementById('galerie-serie')
+
+if (grille instanceof HTMLElement && section instanceof HTMLElement) {
+  const PAR_PAGE = Number(section.dataset.parPage) || 12
+  const NOMBRE_INITIAL = Number(section.dataset.nombreInitial) || 8
+
+  const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+  const dateFR = (iso) => {
+    const [a, m, j] = iso.split('-')
+    return `${Number(j)} ${MOIS[Number(m) - 1]} ${a}`
+  }
+
+  const figures = Array.from(grille.querySelectorAll('figure.photo-daypic'))
+  const items = figures.map((f) => ({
+    id: f.dataset.id ?? '',
+    date: f.dataset.date ?? '',
+    lieu: f.dataset.lieu ?? '',
+    lieuNom: f.dataset.lieuNom ?? '',
+    figure: f,
+  }))
+  const texte = document.getElementById('galerie-etat')
+  const btnPlus = document.getElementById('btn-plus')
+  const btnReset = document.getElementById('btn-reset')
+
+  // Mélange Fisher–Yates : la sélection aléatoire du chargement
+  const ordreInitial = (() => {
+    const ids = items.map((i) => i.id)
+    for (let i = ids.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[ids[i], ids[j]] = [ids[j], ids[i]]
+    }
+    return ids
+  })()
+
+  // Photos correspondant au filtre actif (null = aucun filtre)
+  const listeFiltree = (e) => {
+    if (e.date && e.lieu) return items.filter((i) => i.date === e.date && i.lieu === e.lieu)
+    if (e.date) return items.filter((i) => i.date === e.date)
+    if (e.lieu) return items.filter((i) => i.lieu === e.lieu)
+    return null
+  }
+
+  const texteEtat = (e, n) => {
+    const l = listeFiltree(e)
+    if (!l) return `${n} photo${n > 1 ? 's' : ''} au hasard sur ${items.length}`
+    const parties = []
+    if (e.date) parties.push(dateFR(e.date))
+    if (e.lieu) {
+      const nom = items.find((i) => i.lieu === e.lieu)?.lieuNom ?? e.lieu
+      parties.push(nom)
+    }
+    const total = l.length
+    return `${total} photo${total > 1 ? 's' : ''} — ${parties.join(' · ')}`
+  }
+
+  let cleFiltre = ''
+  let affichees = []
+
+  function appliquer() {
+    const e = lecture()
+    const cle = `${e.date}|${e.lieu}`
+    if (cle !== cleFiltre) {
+      cleFiltre = cle
+      const l = listeFiltree(e)
+      const base = l ? l.map((i) => i.id) : ordreInitial
+      affichees = base.slice(0, l ? PAR_PAGE : NOMBRE_INITIAL)
+      majAffichees(affichees) // prévient la lightbox (ré-entre ici, sans boucle : la clé est déjà à jour)
+    }
+    const visibles = new Set(affichees)
+    for (const it of items) it.figure.hidden = !visibles.has(it.id)
+    if (texte) texte.textContent = texteEtat(e, affichees.length)
+    const l = listeFiltree(e)
+    const total = l ? l.length : ordreInitial.length
+    if (btnReset) btnReset.hidden = !(e.date || e.lieu)
+    if (btnPlus) btnPlus.hidden = affichees.length >= total
+  }
+
+  abonner(appliquer)
+
+  btnPlus?.addEventListener('click', () => {
+    const e = lecture()
+    const l = listeFiltree(e)
+    const base = l ? l.map((i) => i.id) : ordreInitial
+    affichees = base.slice(0, affichees.length + PAR_PAGE)
+    majAffichees(affichees) // appliquer() se rejoue : visibilité + texte + boutons
+  })
+
+  btnReset?.addEventListener('click', () => resetFiltre())
+
+  for (const it of items) {
+    it.figure.addEventListener('click', () => ouvrirPhoto(it.id))
+  }
+
+  appliquer() // état initial : 8 photos au hasard
+}
+</script>
+
+<style>
+.serie-entete {
+  max-width: 800px;
+  margin: 0 auto 3.5rem;
+  text-align: center;
+}
+.titre-page {
+  font-size: 2.5rem;
+  font-weight: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 2rem;
+}
+.intro-texte {
+  line-height: 1.7;
+  color: #444;
+  font-size: 1.05rem;
+  text-align: justify;
+  margin: 0 0 1.2rem;
+}
+
+/* --- Barre d'état + boutons --- */
+.galerie-barre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.galerie-etat {
+  font-size: 0.85rem;
+  font-weight: normal;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+.galerie-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+.galerie-bouton {
+  border: 1px solid #1a1a1a;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: inherit;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.galerie-bouton:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+.galerie-bouton[hidden] {
+  display: none;
+}
+
+/* --- Grille des photos --- */
+.grille-daypic {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.photo-daypic {
+  margin: 0;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.photo-daypic[hidden] {
+  display: none;
+}
+.photo-daypic img {
+  width: 100%;
+  aspect-ratio: 3/2; /* format natif des photos (2048 × 1361) */
+  object-fit: cover;
+  display: block;
+  user-select: none;
+}
+.photo-daypic:hover {
+  opacity: 0.75;
+}
+</style>
