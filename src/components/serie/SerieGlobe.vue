@@ -26,6 +26,8 @@ const tracer = geoPath(projection)
 const rotation = ref([-DEFAUT.lon, -DEFAUT.lat]) // rotation = [-lon, -lat]
 // La mini-carte de la lightbox est une version zoomée (régionale), pas le globe entier
 const ZOOM_MINI = 2
+// Zoom manuel : monte jusqu'à 8× pour séparer des positions proches
+const MAX_ZOOM = 8
 const zoom = ref(props.mode === 'mini' ? ZOOM_MINI : 1)
 const filtre = ref({ date: null, lieu: null })
 
@@ -64,7 +66,11 @@ const clusters = computed(() => {
 const marqueurs = computed(() => {
   if (props.mode === 'mini') {
     if (!props.centre) return []
-    return [{ key: 'point', type: 'point', nom: props.centre.nom, lat: props.centre.lat, lon: props.centre.lon }]
+    // IMPORTANT : projeter le point, sinon x/y sont undefined et le pin n'apparaît pas
+    projection.rotate(rotation.value).scale(RAYON * zoom.value)
+    const pt = projection([props.centre.lon, props.centre.lat])
+    if (!pt) return []
+    return [{ key: 'point', type: 'point', nom: props.centre.nom, lat: props.centre.lat, lon: props.centre.lon, x: pt[0], y: pt[1] }]
   }
   const base = filtre.value.date ? lieuxDuJour.value : clusters.value
   const c = centreGeo.value
@@ -94,7 +100,7 @@ function animerVers(rotCible, zoomCible, duree = 700) {
     const p = Math.min(1, (t - t0) / duree)
     const e = 1 - Math.pow(1 - p, 3) // easeOutCubic
     rotation.value = [depart[0] + (cible0 - depart[0]) * e, depart[1] + (rotCible[1] - depart[1]) * e]
-    zoom.value = zDepart + (zoomCible - zDepart) * e
+    zoom.value = Math.max(1, Math.min(MAX_ZOOM, zDepart + (zoomCible - zDepart) * e))
     raf = p < 1 ? requestAnimationFrame(pas) : null
   }
   raf = requestAnimationFrame(pas)
@@ -149,7 +155,7 @@ function enDeplacement(e) {
     // Pincez pour zoomer (mobile)
     const pts = [...pointeurs.values()]
     const d = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y)
-    if (pincee) zoom.value = Math.max(1, Math.min(3.5, zoomPincee * (d / pincee)))
+    if (pincee) zoom.value = Math.max(1, Math.min(MAX_ZOOM, zoomPincee * (d / pincee)))
     else {
       pincee = d
       zoomPincee = zoom.value
@@ -162,9 +168,11 @@ function enDeplacement(e) {
   const dy = e.clientY - dernier.y
   if (Math.abs(dx) + Math.abs(dy) > 3) bouge = true
   dernier = { x: e.clientX, y: e.clientY }
+  // Vitesse proportionnelle au zoom : le globe suit le curseur même à 8×
+  const sensib = (57.3 / (RAYON * zoom.value)) * 0.7
   rotation.value = [
-    rotation.value[0] + dx * 0.25,
-    Math.max(-80, Math.min(80, rotation.value[1] - dy * 0.25)),
+    rotation.value[0] + dx * sensib,
+    Math.max(-80, Math.min(80, rotation.value[1] - dy * sensib)),
   ]
 }
 function enHaut(e) {
@@ -174,7 +182,7 @@ function enHaut(e) {
 }
 function molette(e) {
   if (props.mode !== 'plein') return
-  zoom.value = Math.max(1, Math.min(3.5, zoom.value * Math.exp(-e.deltaY * 0.0015)))
+  zoom.value = Math.max(1, Math.min(MAX_ZOOM, zoom.value * Math.exp(-e.deltaY * 0.0015)))
 }
 
 function clicMarqueur(m) {
